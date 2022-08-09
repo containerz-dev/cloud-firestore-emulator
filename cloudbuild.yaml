@@ -17,10 +17,41 @@ steps:
       - --label=org.opencontainers.image.revision=${COMMIT_SHA}
       - --output=type=registry
       - --target=cloud-firestore-emulator
-      - --tag=asia-docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
+      - --tag=docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
       - .
+    waitFor:
+      - "-"
+
+  - id: tagging-us
+    name: docker:22.06-rc-cli
+    entrypoint: "docker"
+    env:
+      - "DOCKER_BUILDKIT=1"
+      - "DOCKER_CLI_EXPERIMENTAL=enabled"
+    args:
+      - image
+      - tag
+      - docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
+      - us-docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
+    waitFor:
+      - "cloud-firestore-emulator"
+
+  - id: tagging-asia
+    name: docker:22.06-rc-cli
+    entrypoint: "docker"
+    env:
+      - "DOCKER_BUILDKIT=1"
+      - "DOCKER_CLI_EXPERIMENTAL=enabled"
+    args:
+      - image
+      - tag
+      - docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
+      - asia-docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
+    waitFor:
+      - "cloud-firestore-emulator"
 
 images:
+  - us-docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
   - asia-docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
 
 substitutions:
