@@ -1,0 +1,37 @@
+steps:
+  - id: cloud-firestore-emulator
+    name: docker:22.06-rc-cli
+    entrypoint: "docker"
+    env:
+      - "DOCKER_BUILDKIT=1"
+      - "DOCKER_CLI_EXPERIMENTAL=enabled"
+    args:
+      - buildx
+      - build
+      - --pull
+      - --build-arg=BUILDKIT_INLINE_BUILDINFO_ATTRS=1
+      - --build-arg=BUILDKIT_INLINE_CACHE=1
+      - --build-arg=OPENJDK_TAG=${_OPENJDK_TAG}
+      - --build-arg=FIRESTORE_EMULATOR_BUILD_NUMBER=${_FIRESTORE_EMULATOR_BUILD_NUMBER}
+      - --cache-from=type=registry,ref=adoptopenjdk/openjdk11:${_OPENJDK_TAG}
+      - --label=org.opencontainers.image.revision=${COMMIT_SHA}
+      - --output=type=registry
+      - --target=cloud-firestore-emulator
+      - --tag=asia-docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
+      - .
+
+images:
+  - asia-docker.pkg.dev/${PROJECT_ID}/gcp/cloud-firestore-emulator:${_FIRESTORE_EMULATOR_BUILD_NUMBER}
+
+substitutions:
+  _OPENJDK_TAG: "alpine-slim"
+  _FIRESTORE_EMULATOR_BUILD_NUMBER: "20220708145531"
+
+tags:
+  - "gcp.cloud-firestore-emulator"
+
+options:
+  dynamic_substitutions: true
+  requestedVerifyOption: 'VERIFIED'
+
+timeout: 900s  # 15min
