@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile-upstream:1.4
 
-ARG OPENJDK_TAG
-FROM adoptopenjdk/openjdk11:${OPENJDK_TAG} AS cloud-firestore-emulator
+ARG OPENJDK_VERSION
+FROM --platform=${BUILDPLATFORM} amazoncorretto:${OPENJDK_VERSION} AS cloud-firestore-emulator
 
 ARG FIRESTORE_EMULATOR_BUILD_NUMBER
 ENV FIRESTORE_EMULATOR_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/components/google-cloud-sdk-cloud-firestore-emulator-${FIRESTORE_EMULATOR_BUILD_NUMBER}.tar.gz"
