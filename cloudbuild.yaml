@@ -45,8 +45,7 @@ steps:
       - "bootstrap-builder"
 
 substitutions:
-  _OPENJDK_VERSION: "11-alpine"
-  _FIRESTORE_EMULATOR_BUILD_NUMBER: "20220708145531"
+  _FIRESTORE_EMULATOR_BUILD_NUMBER: "20221104233933"
 
 tags:
   - "gcp.cloud-firestore-emulator"
