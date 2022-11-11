@@ -11,8 +11,9 @@ RUN set -eux; \
 	\
 	wget -q -O- ${FIRESTORE_EMULATOR_URL} | tar xfz - --strip-components=1 -C /
 
+WORKDIR /cloud-firestore-emulator
 EXPOSE 8080/tcp
-ENTRYPOINT ["/cloud-firestore-emulator/cloud_firestore_emulator"]
+ENTRYPOINT ["cloud_firestore_emulator"]
 
 LABEL org.opencontainers.image.authors       "The containerz authors"
 LABEL org.opencontainers.image.url           "https://github.com/containerz-dev/cloud-firestore-emulator"
