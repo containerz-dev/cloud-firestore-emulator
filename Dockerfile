@@ -13,7 +13,7 @@ RUN apt-get update && \
 	curl -sSL ${FIRESTORE_EMULATOR_URL} | tar xfz - --strip-components=1 -C /
 
 EXPOSE 8080/tcp
-ENTRYPOINT ["/cloud-firestore-emulator/cloud_firestore_emulator"]
+ENTRYPOINT ["/cloud-firestore-emulator/cloud_firestore_emulator", "--host", "0.0.0.0"]
 
 LABEL org.opencontainers.image.authors       "The containerz authors"
 LABEL org.opencontainers.image.url           "https://github.com/containerz-dev/cloud-firestore-emulator"
