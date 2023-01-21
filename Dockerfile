@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile-upstream:1.4
+# syntax=docker/dockerfile-upstream:1.5
 
 FROM --platform=${BUILDPLATFORM} debian:bullseye-slim AS cloud-firestore-emulator
 
