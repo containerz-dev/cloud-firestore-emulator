@@ -1,6 +1,7 @@
-# syntax=docker/dockerfile-upstream:1.5
+# syntax=docker/dockerfile-upstream:master-labs
 
-FROM --platform=${BUILDPLATFORM} debian:bullseye-slim AS cloud-firestore-emulator
+FROM debian:bullseye-slim AS cloud-firestore-emulator
+ARG TARGETPLATFORM
 
 ARG FIRESTORE_EMULATOR_BUILD_NUMBER
 LABEL org.opencontainers.image.authors       "The containerz authors"
